@@ -27,3 +27,7 @@ def load_audio(path):
                 )
         return datasets.Audio(sampling_rate=16000).decode_example(f.name)
 ```
+
+## Conversion speed
+
+Based on my one-shot estimation for a 8.7s long sample I estimate we need about 19 hours for the conversion alone. 
