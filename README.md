@@ -13,4 +13,17 @@ Next step will be dataset preparation with inline conversion.
 
 # Addendum 2022-03-11T14:20:44
 
-The solution has been proposed in [the notebook](1.ipynb), but so far has not been tested.
+The solution has been proposed in [the notebook](1.ipynb), but so far has not been tested:
+
+```python
+import tempfile
+from pydub import AudioSegment
+def load_audio(path):
+    with tempfile.NamedTemporaryFile() as f:
+        AudioSegment.from_mp3(path).export(
+                f.name,
+                format="wav", 
+                parameters=["-ar", "16000"]
+                )
+        return datasets.Audio(sampling_rate=16000).decode_example(f.name)
+```
