@@ -13,4 +13,4 @@ Next step will be dataset preparation with inline conversion.
 
 # Addendum 2022-03-11T14:20:44
 
-The solution has been proposed in (the notebook)[1.ipynb], but so far has not been tested.
+The solution has been proposed in [the notebook](1.ipynb), but so far has not been tested.
