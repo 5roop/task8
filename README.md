@@ -53,8 +53,16 @@ It was noticed that the `FileNotFoundError` was being raised due to the inconsis
 * `from Levenshtein import distance`
 * ```def sim(a, b):
     return 1-(distance(a,b)*2/(len(a)+len(b)))```
-* Prepare the ALL the data for training: prefered nomenclature: `[youtube hash]123.4-135.4`
+* Prepare the ALL the data for training: prefered nomenclature: `[youtube hash]_123.4-135.4`
 * Keep in mind what instances were sent for sampling.
 * How many have sim < 0.8? This could be test set.
 * ~~One yt file could be dev, the rest train.~~ Take random subset for dev split. 2k samples.
 
+During the preparation I take the following notes:
+* YT hashes are all 11 characters long. The character set has minuses, underscores, ... but not slashes, hashes, dots.
+* With my improved error correction I can find all the true filenames. The function has been improved so that I can do the entire corpus in 0.8s instead of 3min45s (24.5dB speedup!)
+* 94% of the transcripts satisfy the `sim > 0.8` condition.
+* Splitting was performed with a random seed, this way it is more controllable.
+
+
+At 2022-03-14T17:28:10 the processing was started. It seems to be going really fast. Probably this is due to the optimizations; only one file segment is opened at one time and we have no conversion to mp3. I don't yet know which factor is more important, but would love to know. I estimate the processing will be done in 2.23 hours, which is just as fast as the sample dataset generation.
