@@ -42,3 +42,8 @@ Meeting notes:
 
 Ok, due to weird glitches in the file I/O about 30% of the files won't open. For now I just pass over them. I can process more later and get the sample count to 1k.
 
+
+
+# Addendum 2022-03-14T14:17:38
+
+It was noticed that the `FileNotFoundError` was being raised due to the inconsistent whitespace use in the mapping. I managed to remove most of them, for all of them the implementation will follow later.
