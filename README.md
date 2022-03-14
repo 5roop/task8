@@ -66,3 +66,8 @@ During the preparation I take the following notes:
 
 
 At 2022-03-14T17:28:10 the processing was started. It seems to be going really fast. Probably this is due to the optimizations; only one file segment is opened at one time and we have no conversion to mp3. I don't yet know which factor is more important, but would love to know. I estimate the processing will be done in 2.23 hours, which is just as fast as the sample dataset generation.
+
+
+# Addendum 2022-03-14T18:59:38
+
+So far everything is going as planned. I estimate 39 minutes are left.
