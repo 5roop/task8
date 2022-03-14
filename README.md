@@ -31,3 +31,14 @@ def load_audio(path):
 ## Conversion speed
 
 Based on my one-shot estimation for a 8.7s long sample I estimate we need about 19 hours for the conversion alone. 
+
+# Moving on
+
+As per Nikola's email I start working on the generation of a random sample of wavs. 
+
+Meeting notes:
+* Use reconames as well (also for audio files).
+* Open a google sheet (so export as excel and rsync to laptop.)
+
+Ok, due to weird glitches in the file I/O about 30% of the files won't open. For now I just pass over them. I can process more later and get the sample count to 1k.
+
