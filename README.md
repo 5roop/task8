@@ -47,3 +47,14 @@ Ok, due to weird glitches in the file I/O about 30% of the files won't open. For
 # Addendum 2022-03-14T14:17:38
 
 It was noticed that the `FileNotFoundError` was being raised due to the inconsistent whitespace use in the mapping. I managed to remove most of them, for all of them the implementation will follow later.
+
+# Meeting notes 2022-03-14T15:36:25
+* Min sim: 0.8
+* `from Levenshtein import distance`
+* ```def sim(a, b):
+    return 1-(distance(a,b)*2/(len(a)+len(b)))```
+* Prepare the ALL the data for training: prefered nomenclature: `[youtube hash]123.4-135.4`
+* Keep in mind what instances were sent for sampling.
+* How many have sim < 0.8? This could be test set.
+* ~~One yt file could be dev, the rest train.~~ Take random subset for dev split. 2k samples.
+
