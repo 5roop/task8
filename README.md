@@ -71,3 +71,7 @@ At 2022-03-14T17:28:10 the processing was started. It seems to be going really f
 # Addendum 2022-03-14T18:59:38
 
 So far everything is going as planned. I estimate 39 minutes are left.
+
+# Addendum 2022-03-15T07:32:18
+
+The final size of the corpus is 
