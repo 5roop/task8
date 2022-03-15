@@ -75,3 +75,11 @@ So far everything is going as planned. I estimate 39 minutes are left.
 # Addendum 2022-03-15T07:32:18
 
 The final size of the corpus is 1.3TB. I opted for generation of a subset in order to be able to fit it all on kt-vm-1tb. I copied the files to a separate folder, which took quite long, and then I started rsyncing data to kt-vm-1TB.
+
+Meeting notes:
+* Drop instances where sim < 0.8. Move more data.
+* Prepare a new vocabulary.
+* Drop what was used in the sample.
+* Dev: use 500 samples.
+* Train: as much as feasible.
+* Test: will be given later.
