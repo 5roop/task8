@@ -78,8 +78,11 @@ The final size of the corpus is 1.3TB. I opted for generation of a subset in ord
 
 Meeting notes:
 * ✓Drop instances where sim < 0.8. Move more data.
-* Prepare a new vocabulary.
+* ✓Prepare a new vocabulary.
 * ✓Drop what was used in the sample.
 * Dev: use 500 samples.
 * Train: as much as feasible.
 * Test: will be given later.
+
+# Addendum 2022-03-15T12:27:38
+Ok, we filled the disk to 97%, I could go higher, but not significantly due to the requirements of saved models and other users.
