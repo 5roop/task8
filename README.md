@@ -77,9 +77,14 @@ So far everything is going as planned. I estimate 39 minutes are left.
 The final size of the corpus is 1.3TB. I opted for generation of a subset in order to be able to fit it all on kt-vm-1tb. I copied the files to a separate folder, which took quite long, and then I started rsyncing data to kt-vm-1TB.
 
 Meeting notes:
-* Drop instances where sim < 0.8. Move more data.
-* Prepare a new vocabulary.
-* Drop what was used in the sample.
+* ✓Drop instances where sim < 0.8. Move more data.
+* ✓Prepare a new vocabulary.
+* ✓Drop what was used in the sample.
 * Dev: use 500 samples.
 * Train: as much as feasible.
 * Test: will be given later.
+
+# Addendum 2022-03-15T12:27:38
+Ok, we filled the disk to 97%, I could go higher, but not significantly due to the requirements of saved models and other users.
+
+I started my first training set (directory `6_`). I notice the data loading take quite a long time, probably due to the fact that the dataset is bigger. So far I've not even read the data after 35 min....
