@@ -86,3 +86,5 @@ Meeting notes:
 
 # Addendum 2022-03-15T12:27:38
 Ok, we filled the disk to 97%, I could go higher, but not significantly due to the requirements of saved models and other users.
+
+I started my first training set (directory `6_`). I notice the data loading take quite a long time, probably due to the fact that the dataset is bigger. So far I've not even read the data after 35 min....
