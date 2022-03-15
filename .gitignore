@@ -29,6 +29,10 @@ __pycache__/
 data/
 sample/
 transfer/
+
+
+
+
 # Distribution / packaging
 .Python
 build/
