@@ -87,4 +87,21 @@ Meeting notes:
 # Addendum 2022-03-15T12:27:38
 Ok, we filled the disk to 97%, I could go higher, but not significantly due to the requirements of saved models and other users.
 
-I started my first training set (directory `6_`). I notice the data loading take quite a long time, probably due to the fact that the dataset is bigger. So far I've not even read the data after 35 min....
+I started my first training set (directory `6_`). I notice the data loading take quite a long time, probably due to the fact that the dataset is bigger. So far I've not even read the data after 65 min....
+
+# Addendum 2022-03-15T14:44:30
+
+Loading the dataset takes a long time. I experimented with only 1% of the dataset and found out it takes 6 min to process it in a notebook, meaning that I'd need 10 hours to do it. The bottle neck is the part
+
+```python
+
+import datasets
+from datasets import load_dataset, load_metric, Audio
+def load_audio(path):
+    return datasets.Audio(sampling_rate=16000).decode_example(path)
+
+# Adding audio
+common_voice_train_df.loc[:, "audio"] = common_voice_train_df.path.apply(load_audio)
+```
+
+Running it in a script instead of in a notebook doesn't change the performance significantly. 
