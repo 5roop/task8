@@ -30,7 +30,8 @@ data/
 data_16000/
 sample/
 transfer/
-
+keep_pruned.csv
+parlaspeech*
 
 
 
