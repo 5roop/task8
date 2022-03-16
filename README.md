@@ -104,4 +104,6 @@ def load_audio(path):
 common_voice_train_df.loc[:, "audio"] = common_voice_train_df.path.apply(load_audio)
 ```
 
-Running it in a script instead of in a notebook doesn't change the performance significantly. 
+Running it in a script instead of in a notebook doesn't change the performance significantly.
+
+After a skype chat with Nikola it had been found that the data was sampled with 48kHz frequency instead of 16. That was corrected and new files are being transfered as we speak.
