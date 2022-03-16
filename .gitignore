@@ -27,6 +27,7 @@ __pycache__/
 
 # Data
 data/
+data_16000/
 sample/
 transfer/
 
