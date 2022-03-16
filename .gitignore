@@ -29,7 +29,8 @@ __pycache__/
 data/
 sample/
 transfer/
-
+keep_pruned.csv
+parlaspeech*
 
 
 
