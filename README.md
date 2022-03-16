@@ -107,3 +107,6 @@ common_voice_train_df.loc[:, "audio"] = common_voice_train_df.path.apply(load_au
 Running it in a script instead of in a notebook doesn't change the performance significantly.
 
 After a skype chat with Nikola it had been found that the data was sampled with 48kHz frequency instead of 16. That was corrected and new files are being transfered as we speak.
+
+After the files have been transfered,  I started a small trial run to see if it runs OK. It does, it seems that with only a 1k subset the loading and training runs without problems. It takes 20 minutes to run, meaning that we can expect 3 days of training for the full dataset...
+
