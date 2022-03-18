@@ -112,9 +112,13 @@ After the files have been transfered,  I started a small trial run to see if it 
 
 To test if everything works as it should I ran another round, this time with 3k instances.
 
-Since the training won't run, go for 200hours of data.
+✓ Since the training won't run, go for 200hours of data.
 
 Unnormalized transcripts: /home/korzinek/kaldi/exp/ali_all/unnorm.json
 Nikola suggests to do lowercasing and removal of puctiation. Compare with normalized performance. Once the training works of course.
 
-Transform the corpus to mono!
+✓ Transform the corpus to mono!
+
+# Addendum 2022-03-18T11:20:56
+
+The training still doesn't run. It seems the limiting factor is not the training, but the dataset loading. I've limited the data to 33k instances.
