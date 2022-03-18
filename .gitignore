@@ -25,13 +25,6 @@ __pycache__/
 # CHecpoints
 **checkpoint**
 
-# Data
-data/
-data_16000/
-sample/
-transfer/
-keep_pruned.csv
-parlaspeech*
 
 
 
@@ -113,3 +106,12 @@ ipython_config.py
 # Data Files
 crawldata/*
 test-data/*
+
+# Data
+data/
+data_16000/
+data_16000_mono/
+sample/
+transfer/
+keep_pruned.csv
+parlaspeech*
