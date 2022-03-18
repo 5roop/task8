@@ -4,7 +4,8 @@ from numba import cuda
 cuda.select_device(0)
 cuda.close()
 cuda.select_device(0)
-
+import os
+os.system("bash /home/peterr/clean_tmp_script.sh")
 torch.cuda.empty_cache()
 
 # %%
@@ -14,11 +15,11 @@ import os
 f = "keep_pruned.csv"
 data_dir = "/home/peterr/macocu/task8/transfer/"
 df = pd.read_csv(f)
-
+modelname = "200_"
 df["path"] = data_dir + df["hashname"]
 df["sentence"] = df.human_transcript
 df = df.loc[:, ["path", "sentence"]]
-df.head()
+
 
 
 # %%
@@ -137,7 +138,7 @@ common_voice_test_mapped = common_voice_test_dataset.map(
     prepare_dataset, remove_columns=common_voice_test_dataset.column_names)
 
 # %%
-repo_name = "6_"
+repo_name = modelname
 wer_metric = load_metric("wer")
 def compute_metrics(pred):
     pred_logits = pred.predictions
@@ -178,7 +179,7 @@ training_args = TrainingArguments(
   per_device_train_batch_size=16,
   gradient_accumulation_steps=4,
   evaluation_strategy="steps",
-  num_train_epochs=8,
+  num_train_epochs=4,
   gradient_checkpointing=True,
   fp16=True,
   save_steps=400,
