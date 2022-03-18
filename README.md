@@ -121,4 +121,4 @@ Nikola suggests to do lowercasing and removal of puctiation. Compare with normal
 
 # Addendum 2022-03-18T11:20:56
 
-The training still doesn't run. It seems the limiting factor is not the training, but the dataset loading. I've limited the data to 33k instances.
+The training still doesn't run. It seems the limiting factor is not the training, but the dataset loading. I've limited the data to 33k instances. This made it to training.
