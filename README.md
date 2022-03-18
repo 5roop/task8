@@ -107,3 +107,14 @@ common_voice_train_df.loc[:, "audio"] = common_voice_train_df.path.apply(load_au
 Running it in a script instead of in a notebook doesn't change the performance significantly.
 
 After a skype chat with Nikola it had been found that the data was sampled with 48kHz frequency instead of 16. That was corrected and new files are being transfered as we speak.
+
+After the files have been transfered,  I started a small trial run to see if it runs OK. It does, it seems that with only a 1k subset the loading and training runs without problems. It takes 20 minutes to run, meaning that we can expect 3 days of training for the full dataset...
+
+To test if everything works as it should I ran another round, this time with 3k instances.
+
+Since the training won't run, go for 200hours of data.
+
+Unnormalized transcripts: /home/korzinek/kaldi/exp/ali_all/unnorm.json
+Nikola suggests to do lowercasing and removal of puctiation. Compare with normalized performance. Once the training works of course.
+
+Transform the corpus to mono!
