@@ -258,3 +258,6 @@ In `selection_16000_mono` I will only include files that appear in Nikola's tran
 I will delete the surplus files and correct the transcripts (`selection.json`, `selection.csv`). This was completed at 2022-03-19T10:38:41.
 
 
+# Addendum 2022-03-19T13:06:24
+
+25000 instances would finally run. I had new data ready, so I switched to that. Will report in cca 9 hours.
