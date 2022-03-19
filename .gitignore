@@ -117,3 +117,5 @@ transfer/
 keep_pruned.csv
 parlaspeech*
 selection*
+transfer_10/
+transfer_10.csv
