@@ -243,7 +243,6 @@ Exception                                 Traceback (most recent call last)
 
 Exception: problem
 ```
-
-The kernel didn't die this time, so I was able to try the training again, with the only correction being inclusion of previously inhibited duration clipper at 20s. My next experiments will be in reducing the per device batch size from 16 to 8. This also failed, so I'm down to 4.
-
 The OSError[12] seems to be related to CPU. I noticed that only one core gets maxxed out, hinting that there is no parallelization in effect.
+
+The kernel didn't die this time, so I was able to try the training again, with the only correction being inclusion of previously inhibited duration clipper at 20s. My next experiments will be in reducing the per device batch size from 16 to 8. This also failed, so I'm down to 4. 
