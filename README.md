@@ -247,9 +247,14 @@ The OSError[12] seems to be related to CPU. I noticed that only one core gets ma
 
 The kernel didn't die this time, so I was able to try the training again, with the only correction being inclusion of previously inhibited duration clipper at 20s. My next experiments will be in reducing the per device batch size from 16 to 8. This also failed, so I'm down to 4. 
 
+# Addendum 2022-03-19T12:01:23
+
+So far all training sessions crashed miserably. I therefore tried once again with 25k samples, because we know that we can do it with 20k. I will prepare a new transfer directory with newly augmented transcriptions, and if the training on 25k samples works, we'll use that for training.
 
 # Addendum 2022-03-19T10:16:03 - Further file structure changes
 
 In `selection_16000_mono` I will only include files that appear in Nikola's transcripts [here](/home/nikola/projects/parlaspeech/ParlaSpeech-HR.v1.0.jsonl).
 
 I will delete the surplus files and correct the transcripts (`selection.json`, `selection.csv`). This was completed at 2022-03-19T10:38:41.
+
+
