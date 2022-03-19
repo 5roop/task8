@@ -111,7 +111,9 @@ test-data/*
 data/
 data_16000/
 data_16000_mono/
+selection_16000_mono/
 sample/
 transfer/
 keep_pruned.csv
 parlaspeech*
+selection*
