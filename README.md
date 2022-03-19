@@ -121,4 +121,127 @@ Nikola suggests to do lowercasing and removal of puctiation. Compare with normal
 
 # Addendum 2022-03-18T11:20:56
 
-The training still doesn't run. It seems the limiting factor is not the training, but the dataset loading. I've limited the data to 33k instances. This made it to training.
+The training still doesn't run. It seems the limiting factor is not the training, but the dataset loading. I've limited the data to 33k instances. This made it to training, but then failed:
+
+```python
+---------------------------------------------------------------------------
+OSError                                   Traceback (most recent call last)
+~/anaconda3/lib/python3.8/site-packages/wandb/sdk/wandb_init.py in init(job_type, dir, config, project, entity, reinit, tags, group, name, notes, magic, config_exclude_keys, config_include_keys, anonymous, mode, allow_val_change, resume, force, tensorboard, sync_tensorboard, monitor_gym, save_code, id, settings)
+    869         try:
+--> 870             run = wi.init()
+    871             except_exit = wi.settings._except_exit
+
+~/anaconda3/lib/python3.8/site-packages/wandb/sdk/wandb_init.py in init(self)
+    441         backend = Backend(settings=s, manager=manager)
+--> 442         backend.ensure_launched()
+    443         backend.server_connect()
+
+~/anaconda3/lib/python3.8/site-packages/wandb/sdk/backend/backend.py in ensure_launched(self)
+    167 
+--> 168         self.record_q = self._multiprocessing.Queue()
+    169         self.result_q = self._multiprocessing.Queue()
+
+~/anaconda3/lib/python3.8/multiprocessing/context.py in Queue(self, maxsize)
+    102         from .queues import Queue
+--> 103         return Queue(maxsize, ctx=self.get_context())
+    104 
+
+~/anaconda3/lib/python3.8/multiprocessing/queues.py in __init__(self, maxsize, ctx)
+     41         self._reader, self._writer = connection.Pipe(duplex=False)
+---> 42         self._rlock = ctx.Lock()
+     43         self._opid = os.getpid()
+
+~/anaconda3/lib/python3.8/multiprocessing/context.py in Lock(self)
+     67         from .synchronize import Lock
+---> 68         return Lock(ctx=self.get_context())
+     69 
+
+~/anaconda3/lib/python3.8/multiprocessing/synchronize.py in __init__(self, ctx)
+    161     def __init__(self, *, ctx):
+--> 162         SemLock.__init__(self, SEMAPHORE, 1, 1, ctx=ctx)
+    163 
+
+~/anaconda3/lib/python3.8/multiprocessing/synchronize.py in __init__(self, kind, value, maxvalue, ctx)
+     79             from .resource_tracker import register
+---> 80             register(self._semlock.name, "semaphore")
+     81             util.Finalize(self, SemLock._cleanup, (self._semlock.name,),
+
+~/anaconda3/lib/python3.8/multiprocessing/resource_tracker.py in register(self, name, rtype)
+    146         '''Register name of resource with resource tracker.'''
+--> 147         self._send('REGISTER', name, rtype)
+    148 
+
+~/anaconda3/lib/python3.8/multiprocessing/resource_tracker.py in _send(self, cmd, name, rtype)
+    153     def _send(self, cmd, name, rtype):
+--> 154         self.ensure_running()
+    155         msg = '{0}:{1}:{2}\n'.format(cmd, name, rtype).encode('ascii')
+
+~/anaconda3/lib/python3.8/multiprocessing/resource_tracker.py in ensure_running(self)
+    120                         signal.pthread_sigmask(signal.SIG_BLOCK, _IGNORED_SIGNALS)
+--> 121                     pid = util.spawnv_passfds(exe, args, fds_to_pass)
+    122                 finally:
+
+~/anaconda3/lib/python3.8/multiprocessing/util.py in spawnv_passfds(path, args, passfds)
+    451     try:
+--> 452         return _posixsubprocess.fork_exec(
+    453             args, [os.fsencode(path)], True, passfds, None, None,
+
+OSError: [Errno 12] Cannot allocate memory
+
+The above exception was the direct cause of the following exception:
+
+Exception                                 Traceback (most recent call last)
+<ipython-input-6-055d89daa74d> in <module>
+     65 )
+     66 
+---> 67 trainer.train()
+     68 
+     69 
+
+~/anaconda3/lib/python3.8/site-packages/transformers/trainer.py in train(self, resume_from_checkpoint, trial, ignore_keys_for_eval, **kwargs)
+   1258         model.zero_grad()
+   1259 
+-> 1260         self.control = self.callback_handler.on_train_begin(args, self.state, self.control)
+   1261 
+   1262         # Skip the first epochs_trained epochs to get the random state of the dataloader at the right point.
+
+~/anaconda3/lib/python3.8/site-packages/transformers/trainer_callback.py in on_train_begin(self, args, state, control)
+    344     def on_train_begin(self, args: TrainingArguments, state: TrainerState, control: TrainerControl):
+    345         control.should_training_stop = False
+--> 346         return self.call_event("on_train_begin", args, state, control)
+    347 
+    348     def on_train_end(self, args: TrainingArguments, state: TrainerState, control: TrainerControl):
+
+~/anaconda3/lib/python3.8/site-packages/transformers/trainer_callback.py in call_event(self, event, args, state, control, **kwargs)
+    385     def call_event(self, event, args, state, control, **kwargs):
+    386         for callback in self.callbacks:
+--> 387             result = getattr(callback, event)(
+    388                 args,
+    389                 state,
+
+~/anaconda3/lib/python3.8/site-packages/transformers/integrations.py in on_train_begin(self, args, state, control, model, **kwargs)
+    538             self._initialized = False
+    539         if not self._initialized:
+--> 540             self.setup(args, state, model, **kwargs)
+    541 
+    542     def on_train_end(self, args, state, control, model=None, tokenizer=None, **kwargs):
+
+~/anaconda3/lib/python3.8/site-packages/transformers/integrations.py in setup(self, args, state, model, **kwargs)
+    511 
+    512             if self._wandb.run is None:
+--> 513                 self._wandb.init(
+    514                     project=os.getenv("WANDB_PROJECT", "huggingface"),
+    515                     name=run_name,
+
+~/anaconda3/lib/python3.8/site-packages/wandb/sdk/wandb_init.py in init(job_type, dir, config, project, entity, reinit, tags, group, name, notes, magic, config_exclude_keys, config_include_keys, anonymous, mode, allow_val_change, resume, force, tensorboard, sync_tensorboard, monitor_gym, save_code, id, settings)
+    906             if except_exit:
+    907                 os._exit(-1)
+--> 908             six.raise_from(Exception("problem"), error_seen)
+    909     return run
+
+~/anaconda3/lib/python3.8/site-packages/six.py in raise_from(value, from_value)
+
+Exception: problem
+```
+
+The kernel didn't die this time, so I was able to try the training again.
