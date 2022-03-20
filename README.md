@@ -261,3 +261,24 @@ I will delete the surplus files and correct the transcripts (`selection.json`, `
 # Addendum 2022-03-19T13:06:24
 
 25000 instances would finally run. I had new data ready, so I switched to that. Will report in cca 9 hours.
+
+Results from the first successful training are far worse from what we've seen before...
+
+Step	Training Loss	Validation Loss	Wer
+400	    3.193200	    0.618208	    1.000000
+800	    0.404400	    0.253443	    0.984000
+1200	0.269600	    0.207803	    0.972000
+1600	0.237100	    0.163443	    0.956000
+2000	0.194700	    0.153030	    0.938000
+2400	0.175000	    0.148244	    0.950000
+2800	0.172600	    0.144318	    0.942000
+3200	0.157700	    0.141186	    0.930000
+3600	0.132300	    0.139779	    0.924000
+4000	0.128800	    0.135688	    0.922000
+4400	0.119400	    0.129832	    0.922000
+4800	0.103100	    0.132970	    0.910000
+5200	0.086900	    0.129028	    0.902000
+5600	0.085200	    0.128787	    0.900000
+6000	0.082400	    0.125917	    0.898000
+
+I proceeded with doubling the learning rate (from 3e-4 to 6e-4), reducing the number of evaluations during the training and re-increasing the per-device batch size to 16 again.
