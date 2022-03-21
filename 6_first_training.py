@@ -4,9 +4,9 @@ from numba import cuda
 cuda.select_device(0)
 cuda.close()
 cuda.select_device(0)
+torch.cuda.empty_cache()
 import os
 os.system("bash /home/peterr/clean_tmp_script.sh")
-torch.cuda.empty_cache()
 
 # %%
 import pandas as pd
