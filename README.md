@@ -375,4 +375,4 @@ This happens as soon as we call the `prepare_dataset` function on the dataset. T
 
 
 # Addendum 2022-03-21T14:03:02
-Ok, I ran another mini training session. The first evaluation returned WER of 1.0, same as the others failed attempts. I shall wait for another eval run, then kill the training and look at the transcripts directly. Unfortunately I cannot train and evaluate simultaneously due to GPU constraints.
+Ok, I ran another mini training session. Two consecutive evaluations returned WER of 1.0, same as the others failed attempts. I shall wait for another eval run, then kill the training and look at the transcripts directly. Unfortunately I cannot train and evaluate simultaneously due to GPU constraints.
