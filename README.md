@@ -359,3 +359,15 @@ In the mean time the toy example training session ended.
 * Check the code. Where does it get used?
 * Inspect what is going on when loading data. Where does this word delimiting happen?
 
+# Addendum 2022-03-21T11:16:00
+
+So I was able to replicate the weird behaviour on train side by doing the following:
+* Import the december tokenizer. Set word_delim="|". Encoded-decoded sentence: `'neće rasti niti kunu stoga je bilo pametno u ovom'`
+* Import the december tokenizer. Set word_delim=" ". Encoded-decoded sentence: `'neće[unk]rasti[unk]niti[unk]kunu[unk]stoga[unk]je[unk]bilo[unk]pametno[unk]u[unk]ovom'`
+* Import the new tokenizer. Set word_delim=" ". Encoded-decoded sentence: `'neće rasti niti kunu stoga je bilo pametno u ovom'`
+* Import the new tokenizer. Set word_delim="|". Encoded-decoded sentence: `'sneće[unk]rasti[unk]niti[unk]kunu[unk]stoga[unk]je[unk]bilo[unk]pametno[unk]u[unk]ovom'`
+
+Default behaviour: 
+```python
+class transformers.Wav2Vec2Tokenizer(vocab_file, bos_token='<s>', eos_token='</s>', unk_token='<unk>', pad_token='<pad>', word_delimiter_token='|', do_lower_case=False, **kwargs)
+```
