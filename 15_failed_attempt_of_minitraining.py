@@ -1,5 +1,4 @@
 # %%
-# %%
 # import torch
 # from numba import cuda
 # cuda.select_device(0)
@@ -18,24 +17,20 @@ import numpy as np
 import os
 f = "transfer_10.csv"
 data_dir = "/home/peterr/macocu/task8/transfer_10/"
-df = pd.read_csv(f)
-modelname = "300_debug_"
+df = pd.read_csv(f, nrows=3000)
+modelname = "300_debug_2_"
 df["path"] = data_dir + df["hashname"]
 df["sentence"] = df.human_transcript
-df = df.loc[:3000, ["path", "sentence"]]
+df = df.loc[:, ["path", "sentence"]]
 
 # Use old or new vocab?
-os.system("cp vocab_december.json vocab.json")
-
-
-# %%
-
+os.system("cp vocab_300.json vocab.json")
 
 
 # %%
 from sklearn.model_selection import train_test_split
 
-common_voice_train_df, common_voice_test_df = train_test_split(df, test_size=500, random_state=42)
+common_voice_train_df, common_voice_test_df = train_test_split(df, test_size=200, random_state=42)
 
 
 common_voice_train_df.reset_index(drop=True, inplace=True)
@@ -57,11 +52,6 @@ common_voice_test_df.loc[:, "audio"] = common_voice_test_df.path.apply(load_audi
 common_voice_train_dataset = datasets.Dataset.from_pandas(common_voice_train_df)
 common_voice_test_dataset = datasets.Dataset.from_pandas(common_voice_test_df)
 
-
-# %%
-common_voice_train_dataset[0]
-
-# %%
 
 # %%
 from transformers import Wav2Vec2CTCTokenizer
@@ -155,9 +145,7 @@ common_voice_train_mapped = common_voice_train_dataset.map(
     prepare_dataset, remove_columns=common_voice_train_dataset.column_names)
 common_voice_test_mapped = common_voice_test_dataset.map(
     prepare_dataset, remove_columns=common_voice_test_dataset.column_names)
-
-
-# %%
+print("Data Preparation Complete!")
 
 # %%
 repo_name = modelname
@@ -204,10 +192,10 @@ training_args = TrainingArguments(
   num_train_epochs=8,
   gradient_checkpointing=True,
   fp16=True,
-  save_steps=400,
+  save_steps=100,
   eval_steps=100,
   logging_steps=100,
-  learning_rate=6e-4,
+  learning_rate=3e-4,
   warmup_steps=100,
   save_total_limit=1,
   push_to_hub=False,
@@ -226,11 +214,4 @@ trainer = Trainer(
 )
 
 trainer.train()
-
-
-
-
-# %%
-
-
 

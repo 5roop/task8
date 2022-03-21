@@ -371,3 +371,4 @@ Default behaviour:
 ```python
 class transformers.Wav2Vec2Tokenizer(vocab_file, bos_token='<s>', eos_token='</s>', unk_token='<unk>', pad_token='<pad>', word_delimiter_token='|', do_lower_case=False, **kwargs)
 ```
+This happens as soon as we call the `prepare_dataset` function on the dataset. The recipe to go forward is therefore using the new dataset and `" "` as word delimiter.
