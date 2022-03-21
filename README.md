@@ -285,3 +285,10 @@ I proceeded with doubling the learning rate (from 3e-4 to 6e-4), reducing the nu
 
 This run performed similarly poopily.
 
+# Meeting notes 2022-03-21T07:58:49
+
+* Are the wavs ok? Play it back, check with soxi. Are they corrupted? Do they all have sample rate 16kHz, channels 1? 
+* Performance with old vocab.json? Is it better (WER at start cca 0.5?)
+* Debug with small dataset; every change from December sessions
+* Check how the dataset looks like when passed into HF at different stages. Do the transcripts look ok or do they become corrupted at some point?
+* Check the model output (models 200, 300). What comes out? How they differ?
