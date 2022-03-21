@@ -292,3 +292,44 @@ This run performed similarly poopily.
 * Debug with small dataset; every change from December sessions
 * Check how the dataset looks like when passed into HF at different stages. Do the transcripts look ok or do they become corrupted at some point?
 * Check the model output (models 200, 300). What comes out? How they differ?
+
+
+# Addendum 2022-03-21T08:39:32
+
+I checked all the files in `transfer_10` directory for sample rate and number of channels. All are 16kHz and mono.
+
+Full soxi output looks like this:
+```
+Input File     : 'transfer_10/sPNuDebATRM_1853.82-1873.66.wav'
+Channels       : 1
+Sample Rate    : 16000
+Precision      : 16-bit
+Duration       : 00:00:19.84 = 317440 samples ~ 1488 CDDA sectors
+File Size      : 635k
+Bit Rate       : 256k
+Sample Encoding: 16-bit Signed Integer PCM
+```
+
+While the files from december sessions look like this:
+```
+Input File     : '00000001.flac.wav'
+Channels       : 1
+Sample Rate    : 16000
+Precision      : 16-bit
+Duration       : 00:00:07.80 = 124800 samples ~ 585 CDDA sectors
+File Size      : 250k
+Bit Rate       : 256k
+Sample Encoding: 16-bit Signed Integer PCM
+```
+
+I also checked bitrate. It seems inconsistent: `Detected bitrate in transfer_10 directory:  {'257k', '258k', '256k', '259k'}`
+
+This is weird, as [this webpage](https://sound.stackexchange.com/questions/37424/how-do-you-compute-the-bitrate-of-a-wav-file#37433) statest the following equation:
+
+```Bits Per Second (bps) = Sample Rate (Hz) * Word Length (bits) * Channel Count```
+
+Since the sample rate and channel count are constant in our case, it seems that word length is not. 
+
+To see what we have in the `transfer_10` directory precision wise, I performed a new scan, but the only precision found was 16 bit...
+
+The analysis is available in [this notebook](12_dataset_inspection.ipynb).
