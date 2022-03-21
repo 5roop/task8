@@ -376,3 +376,19 @@ This happens as soon as we call the `prepare_dataset` function on the dataset. T
 
 # Addendum 2022-03-21T14:03:02
 Ok, I ran another mini training session. Two consecutive evaluations returned WER of 1.0, same as the others failed attempts. I shall wait for another eval run, then kill the training and look at the transcripts directly. Unfortunately I cannot train and evaluate simultaneously due to GPU constraints.
+
+
+
+# Addendum 2022-03-21T15:32:05
+The results look ok. We don't experience problems with weird tokens anymore and the output is sensible, albeit very undertrained.
+
+![](images/image_2022_03_21T13_49_36_534Z.png)
+
+# Meeting notes 2022-03-21T15:47:22
+* ✓ Prepare a new train, dev, test dataset.
+* ✓ Remove those instances that were in "samples." Check that sim >= 0.8 for all. Save the dataset and use when training. Nikola's 5¢: prepare normalised dataset first, train, and then parse the rest of the dataset.
+* One model on normalized -> `words`, one on original transcription `unnormalized` (with a twist: lowercase, all punctuation is to be removed except potentially dots after numbers) 
+* ✓ Dev: 500 instances, test: 500. 
+* Train for 8 epochs on 25k samples. Save more checkpoints than 1 (ideally: one at 4 epochs, one at 8)
+
+Currently (2022-03-21T18:03:22) the training of the first model is in progress.
