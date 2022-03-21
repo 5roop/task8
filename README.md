@@ -352,3 +352,10 @@ In the mean time the toy example training session ended.
 
 
 
+
+# Meeting notes 2022-03-21T10:59:17
+
+* Use new vocabulary, use space as delimiter.
+* Check the code. Where does it get used?
+* Inspect what is going on when loading data. Where does this word delimiting happen?
+
