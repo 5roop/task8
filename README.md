@@ -333,3 +333,22 @@ Since the sample rate and channel count are constant in our case, it seems that 
 To see what we have in the `transfer_10` directory precision wise, I performed a new scan, but the only precision found was 16 bit...
 
 The analysis is available in [this notebook](12_dataset_inspection.ipynb).
+
+Re: inspecting model outputs: ~~I can't run the inspection until my current mini-experiment with old vocabulary finishes due to `CudaOutOfMemory` issues. ~~ I solved that, but I shalln't be able to fiddle around with the old and new vocabularies until the training finishes, just in case.
+
+The outputs are gharbled:
+* setup: old vocab, 300_ model. Output: `['?qs?p?h?m?b?ž?b?w?b?a?e?s?v?h?b?aja?p?t?j?c?b?a?q?s?p?a?ä?sb?d?j?u?b?a?ä?b?a?q?s?f?e?t?kf?e?oj?l?b?a?sf?q?v?c?mj?l?f?a?c?f?ä?a?p?h?s?b?oj?đ?f?ok?b?a?u?s?b?k?b?okb?a?n?b?o?e?b?u?b?']`
+* setup: old_vocab, 200_ model. Output: `['?q?s?p?h?m?b?ž?b?w?b?a?e?s?v?h?b?a?k?p?d?j?q?b?a?c?s?p?ä?b?a?g?j?u?b?a?ä?b?a?q?s?f?e?t?kf?e?o?j?l?b?a?sf?q?v?c?m?j?l?f?a?c?f?ä?a?p?h?s?b?o?j?đ?f?okb?a?u?s?b?k?b?okb?a?n?b?ao?e?b?u?']`
+
+There is no difference if I set word_delimiter to either `"|"` or `" "`. But if I input the new tokenizer:
+
+* setup: new vocab, 300_ model, delim: `"|"`: error.
+* setup: new vocab, 300_ model, delim: `" "`: output: `['proglašava[unk]druga[unk]i[unk]osiba[unk]pro[unk]zracita[unk]za[unk]predsjednika[unk]republike[unk]bez[unk]ograničenja[unk]trajanja[unk]mandata']`
+* setup: new vocab, 300_ model, delim: `"|"`: error
+* setup: new vocab, 200_ model, delim: `" "`: output: `['proglašava[unk]druga[unk]jocipa[unk]broza[unk]fita[unk]za[unk]predsjednika[unk]republike[unk]bez[unk]ograničenja[unk]trajanja[unk]ma[unk]ndat']`
+
+In the mean time the toy example training session ended. 
+
+
+
+
