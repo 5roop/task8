@@ -282,3 +282,6 @@ Step	Training Loss	Validation Loss	Wer
 6000	0.082400	    0.125917	    0.898000
 
 I proceeded with doubling the learning rate (from 3e-4 to 6e-4), reducing the number of evaluations during the training and re-increasing the per-device batch size to 16 again.
+
+This run performed similarly poopily.
+
