@@ -427,4 +427,14 @@ Possible improvements to the trainer:
 * save_strategy: "epoch"
 
 
+# Addendum 2022-03-22T12:44:04
+Weird characters that were not picked up by the punctuation filter:
 
+```
+ '–',
+ '’',
+ '“',
+ '„'
+ ```
+
+ 
