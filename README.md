@@ -438,3 +438,11 @@ Weird characters that were not picked up by the punctuation filter:
  ```
 
  
+
+# Meeting notes 2022-03-28T12:58:41 - Bojan Evkoski
+
+* Lower the LR 10x, monitor eval loss -> this did not work, the results are way worse.
+
+# Addendum 2022-03-29T08:49:30
+
+Lower LR + 200h data produced significantly worse results. To investigate only the effect of the new data, I'm running a new training with the original LR.
