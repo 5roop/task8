@@ -1,0 +1,17 @@
+modelname,split,steps,wer,cer,checkpoint,checkpoint_path,col,epochs,vocabulary_file
+18_normalised,dev,757,0.19763403516388106,0.05503903796105178,checkpoint-757,18_normalised/checkpoint-757,human_transcript,1.9973614775725594,vocab_300.json
+18_normalised,test,757,0.19641584918068725,0.054618619161730796,checkpoint-757,18_normalised/checkpoint-757,human_transcript,1.9973614775725594,vocab_300.json
+18_normalised,dev,1514,0.12204254395485131,0.035959795387238626,checkpoint-1514,18_normalised/checkpoint-1514,human_transcript,3.994722955145119,vocab_300.json
+18_normalised,test,1514,0.11492300104126706,0.03383822399059547,checkpoint-1514,18_normalised/checkpoint-1514,human_transcript,3.994722955145119,vocab_300.json
+18_normalised,dev,2271,0.11173214673323204,0.033536749528852196,checkpoint-2271,18_normalised/checkpoint-2271,human_transcript,5.992084432717678,vocab_300.json
+18_normalised,test,2271,0.10686688222721544,0.03240041596961613,checkpoint-2271,18_normalised/checkpoint-2271,human_transcript,5.992084432717678,vocab_300.json
+18_normalised,dev,3028,0.10364662470154114,0.031400879475904156,checkpoint-3028,18_normalised/checkpoint-3028,human_transcript,7.989445910290238,vocab_300.json
+18_normalised,test,3028,0.10149613635118102,0.03042003888411629,checkpoint-3028,18_normalised/checkpoint-3028,human_transcript,7.989445910290238,vocab_300.json
+19_unnormalised,dev,757,0.19868348875479977,0.05838646057881943,checkpoint-757,19_unnormalised/checkpoint-757,unnormalized_transcript,1.9973614775725594,vocab_300_with_numbers.json
+19_unnormalised,test,757,0.19926772439809165,0.05744856424948773,checkpoint-757,19_unnormalised/checkpoint-757,unnormalized_transcript,1.9973614775725594,vocab_300_with_numbers.json
+19_unnormalised,dev,1514,0.12704333516182117,0.03866440398110352,checkpoint-1514,19_unnormalised/checkpoint-1514,unnormalized_transcript,3.994722955145119,vocab_300_with_numbers.json
+19_unnormalised,test,1514,0.11849550649062465,0.03535367583655531,checkpoint-1514,19_unnormalised/checkpoint-1514,unnormalized_transcript,3.994722955145119,vocab_300_with_numbers.json
+19_unnormalised,dev,2271,0.11025781678551838,0.03461908911617667,checkpoint-2271,19_unnormalised/checkpoint-2271,unnormalized_transcript,5.992084432717678,vocab_300_with_numbers.json
+19_unnormalised,test,2271,0.10839897925219127,0.03285954030022345,checkpoint-2271,19_unnormalised/checkpoint-2271,unnormalized_transcript,5.992084432717678,vocab_300_with_numbers.json
+19_unnormalised,dev,3028,0.10883159626988481,0.034646608264917673,checkpoint-3028,19_unnormalised/checkpoint-3028,unnormalized_transcript,7.989445910290238,vocab_300_with_numbers.json
+19_unnormalised,test,3028,0.10568068345722845,0.032303227541190326,checkpoint-3028,19_unnormalised/checkpoint-3028,unnormalized_transcript,7.989445910290238,vocab_300_with_numbers.json

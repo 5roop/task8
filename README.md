@@ -392,3 +392,57 @@ The results look ok. We don't experience problems with weird tokens anymore and 
 * Train for 8 epochs on 25k samples. Save more checkpoints than 1 (ideally: one at 4 epochs, one at 8)
 
 Currently (2022-03-21T18:03:22) the training of the first model is in progress.
+# Addendum 2022-03-22T10:03:03
+
+With the first model trained I can evaluate it on `dev` and `test` splits:
+
+```
+With normalized model: dev_wer=0.1036 , dev_cer=0.0314 ,
+ (18_normalised)       test_wer=0.1015, test_cer=0.0304,
+```
+
+CER metric distribution across test and dev looks like this:
+
+![](images/20_cer_dev_test.png)
+
+
+while WER metric distribution looks like this:
+
+![](images/20_wer_dev_test.png)
+
+
+I noticed some weird outliers:
+|     | hashname                          | human_transcript                                                                                                                                                                                                                      | unnormalized_transcript                                                                                                                                                                                         | 18_normalised_output                                                                                                                                                                                                         |      wer |       cer | split | Peter's verdict                                                                                                                      |
+|----:|:----------------------------------|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------:|----------:|:------|:-------------------------------------------------------------------------------------------------------------------------------------|
+|  47 | LfkFqOr01h4_1529.55-1530.32.wav   | neznanim                                                                                                                                                                                                                              | neznanim                                                                                                                                                                                                        | ne znanim                                                                                                                                                                                                                    |        2 |     0.125 | dev   | should be `neznanim`                                                                                                                 |
+| 125 | 3yuEqtP43QI_5391.01-5392.76.wav   | devedeset tritrinaesteez                                                                                                                                                                                                              | 9313eez                                                                                                                                                                                                         | devedeset tri tu trinaest z                                                                                                                                                                                                  |        2 |      0.25 | dev   | shouldb be `devedeset tritrinaesteez`. Quite a weird word.                                                                           |
+| 310 | VbHdjxinAXk_2490.72-2510.16.wav   | i prezentirati mu ono što bi on možda mogao i realizirati iznimno je važno evo poštovani kolega                                                                                                                                       | i prezentirati mu ono što bi on možda mogao i realizirati iznimno je važno evo poštovani kolega                                                                                                                 | i prezentirati m ono što bi on možda mogao i realizirati iznimno je važno evo puno vam hvala hvala imamo dvije replike prva je uvaženog zastupnika branka hrga hvala lijepa poštovani kolega                                 | 0.941176 |         1 | dev   | human transcript incomplete! our output is reasonable.                                                                               |
+| 336 | l_K8z4JMT9k_6360.98-6378.72.wav   | ispod žita nije prodaja na londonskoj burzi hadeze nije prodao ni jednu dionicu molu ni jednu jedinu za razliku od esdepe koji je prodao dvadeset pet posto dionice inae molu hvala lijepa na držanju preciznosti što se vremena tiče | ispod žita nije prodaja na londonskoj burzi hdz nije prodao ni jednu dionicu molu ni jednu jedinu za razliku od sdp koji je prodao 25 dionice inae molu hvala lijepa na držanju preciznosti što se vremena tiče | ispod žita nije prodajana londonskoj burzi hadeze nije prodao nijednu dionicu molu nijednu jedinu za razliku od esdepea koji prodao dvadeset pet posto dionica inemolu hvala lijepa na drženju preciznosti šlosevremena tiće | 0.410256 | 0.0655022 | dev   | first part as great as me. After `hvala lijepa`: another speaker, but sound clear, speed reasonable. Model is not performing nicely. |
+| 202 | XDOVoojci5A_23516.14-23516.76.wav | odlaze                                                                                                                                                                                                                                | odlaze                                                                                                                                                                                                          | odnose                                                                                                                                                                                                                       |        1 |       0.5 | nan   | Is probably really `odlaze`.                                                                                                         |
+| 275 | g_7n37_9B_E_7943.1-7944.4.wav     | neizvjesnost dovodi                                                                                                                                                                                                                   | neizvjesnost dovodi                                                                                                                                                                                             | neizvjesnost dovodi do                                                                                                                                                                                                       |      0.5 |  0.157895 | nan   | human transcript incomplete, our output is reasonable                                                                                |
+
+
+Possible improvements to the trainer:
+* eval_strategy: "epoch"
+* save_strategy: "epoch"
+
+
+# Addendum 2022-03-22T12:44:04
+Weird characters that were not picked up by the punctuation filter:
+
+```
+ '–',
+ '’',
+ '“',
+ '„'
+ ```
+
+ 
+
+# Meeting notes 2022-03-28T12:58:41 - Bojan Evkoski
+
+* Lower the LR 10x, monitor eval loss -> this did not work, the results are way worse.
+
+# Addendum 2022-03-29T08:49:30
+
+Lower LR + 200h data produced significantly worse results. To investigate only the effect of the new data, I'm running a new training with the original LR.
