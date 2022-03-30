@@ -446,3 +446,11 @@ Weird characters that were not picked up by the punctuation filter:
 # Addendum 2022-03-29T08:49:30
 
 Lower LR + 200h data produced significantly worse results. To investigate only the effect of the new data, I'm running a new training with the original LR.
+
+
+# Meeting notes - Nikola 2022-03-30T13:30:30
+
+* Run eval on VoxPopuli dev and test (separately) (with the filtering - where raw_transcript is not NaN and it has diacritics)
+* Use Tuesday's model (25)
+* Try to not trim the audio.
+* Investigate the possibility of preloading datasets and cpickling them.
