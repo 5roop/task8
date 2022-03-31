@@ -476,3 +476,7 @@ I inserted some more garbage collection statements for good measure.
 I monitor resources with htop and diskspace with df. It seems we jam up one core, but the disk space so far seems not to be filling up.
 
 The second iteration clocks 3.5 executions per second, which is more reasonable. But this means we can expect about 30h just for dataset preparation...
+
+# Addendum 2022-04-01T01:19:39
+
+So far seems to work ok.
