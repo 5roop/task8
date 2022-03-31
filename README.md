@@ -464,3 +464,15 @@ Epoch	Training Loss	Validation Loss	Wer	Cer
 * Use Tuesday's model (25)
 * Try to not trim the audio.
 * Investigate the possibility of preloading datasets and cpickling them.
+
+# Addendum 2022-03-31T23:38:29
+
+Data loading crashed at 66987/380837. Not bad. Even suspiciously good. The log said it clocked 200 executions per second, which is orders of magnitude better than before.
+
+Retrying.
+
+I inserted some more garbage collection statements for good measure.
+
+I monitor resources with htop and diskspace with df. It seems we jam up one core, but the disk space so far seems not to be filling up.
+
+The second iteration clocks 3.5 executions per second, which is more reasonable. But this means we can expect about 30h just for dataset preparation...
