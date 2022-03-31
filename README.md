@@ -447,10 +447,20 @@ Weird characters that were not picked up by the punctuation filter:
 
 Lower LR + 200h data produced significantly worse results. To investigate only the effect of the new data, I'm running a new training with the original LR.
 
+Results: superb:
+
+Epoch	Training Loss	Validation Loss	Wer	Cer
+1	3.044100	0.188277	0.173580	0.049340
+2	0.184200	0.123732	0.099893	0.031663
+3	0.128000	0.111795	0.085531	0.027965
+4	0.101500	0.107521	0.077653	0.026187
+
+
+
 
 # Meeting notes - Nikola 2022-03-30T13:30:30
 
-* Run eval on VoxPopuli dev and test (separately) (with the filtering - where raw_transcript is not NaN and it has diacritics)
+* Run eval on VoxPopuli dev and test (separately) (with the filtering - where raw_transcript is not NaN.) Preprocess as before: lowercase, remove puctuation.
 * Use Tuesday's model (25)
 * Try to not trim the audio.
 * Investigate the possibility of preloading datasets and cpickling them.
