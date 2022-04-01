@@ -480,3 +480,7 @@ The second iteration clocks 3.5 executions per second, which is more reasonable.
 # Addendum 2022-04-01T01:19:39
 
 So far seems to work ok.
+
+# Addendum 2022-04-01T07:08:43
+
+After 320 minutes it crashed anew. My next fix is to check whether or not it runs ok if I optimize batch size in the `datasets.Dataset.map` method.
