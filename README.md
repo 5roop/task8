@@ -483,4 +483,14 @@ So far seems to work ok.
 
 # Addendum 2022-04-01T07:08:43
 
-After 320 minutes it crashed anew. My next fix is to check whether or not it runs ok if I optimize batch size in the `datasets.Dataset.map` method.
+After 320 minutes it crashed anew. ~~ My next fix is to check whether or not it runs ok if I optimize batch size in the `datasets.Dataset.map` method. ~~ Nope, that didn't work. Increasing the number of processes seemed to work fast, but unfortunately it also stops somewhere in between.
+
+# Meeting notes - Nikola 2022-04-01T15:14:27
+
+* Transfer a mapped chunk and load it on kt.gpu.vm-1tb
+
+_In future: use original text, not normalized!_
+
+# Addendum 2022-04-11T07:48:07
+
+I remapped train and test data. It turns out that the second iteration can be loaded and iterated through without finding empty instances.
