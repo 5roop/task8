@@ -122,3 +122,7 @@ transfer_10.csv
 voxpopuli/
 vox_populi_*/
 ParlaSpeech-HR.v1.0.jsonl
+
+*.arrow
+dataset*
+state.json
