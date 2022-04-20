@@ -494,3 +494,15 @@ _In future: use original text, not normalized!_
 # Addendum 2022-04-11T07:48:07
 
 I remapped train and test data. It turns out that the second iteration can be loaded and iterated through without finding empty instances.
+
+# Addendum 2022-04-20T14:11:54
+
+Training new model (38_unnormalised) as we speak.
+
+Dataprep:
+54248 files from parlaspeech train. Sampling as diverse as possible like last time: take an instance from every speaker and add it to the train until there are enough samples.
+
+Setup:
+8 epochs.
+5 intermediate checkpoints saved.
+The rest of the training params are the same as before.
