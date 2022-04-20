@@ -506,3 +506,5 @@ Setup:
 8 epochs.
 5 intermediate checkpoints saved.
 The rest of the training params are the same as before.
+
+So far the training is progressing as intended.
