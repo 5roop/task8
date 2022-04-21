@@ -24,15 +24,14 @@ cuda.select_device(0)
 # %%
 
 data_dir = "/home/peterr/macocu/task8/transfer/"
-train_df = pd.read_csv("37_train_split.csv")
+train_df = pd.read_csv("37_train_split.csv" )
 train_df["split"] = "train"
 
-test_df = pd.read_csv("37_test_split.csv")
+test_df = pd.read_csv("37_test_split.csv" )
 test_df["split"] = "dev"
-
-
-train_df["sentence"] = train_df.words.apply(literal_eval).apply(" ".join)
-test_df["sentence"] = test_df.words.apply(literal_eval).apply(" ".join)
+from ast import literal_eval
+train_df["sentence"] = train_df.words.apply(literal_eval).apply(" ".join).apply(process)
+test_df["sentence"] = test_df.words.apply(literal_eval).apply(" ".join).apply(process)
 
 train_df["path"] = data_dir + train_df["hashname"]
 test_df["path"] = data_dir + test_df["hashname"]
