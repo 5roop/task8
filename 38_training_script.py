@@ -1,25 +1,38 @@
 # %%
 
+from transformers import Wav2Vec2ForCTC
+from transformers import TrainingArguments
+from transformers import Trainer
+from typing import Any, Dict, List, Optional, Union
+from dataclasses import dataclass, field
+from transformers import Wav2Vec2Processor
+from transformers import Wav2Vec2FeatureExtractor
+from transformers import Wav2Vec2CTCTokenizer
+from datasets import load_dataset, load_metric, Audio
+import datasets
+from ast import literal_eval
+import os
+import numpy as np
+import pandas as pd
 import torch
 from numba import cuda
+
 cuda.select_device(0)
 cuda.close()
 cuda.select_device(0)
 
 # %%
-import pandas as pd
-import numpy as np
-import os
 
 data_dir = "/home/peterr/macocu/task8/transfer/"
-train_df = pd.read_csv("37_train_split.csv" )
+train_df = pd.read_csv("37_train_split.csv")
 train_df["split"] = "train"
 
-test_df = pd.read_csv("37_test_split.csv" )
+test_df = pd.read_csv("37_test_split.csv")
 test_df["split"] = "dev"
 
-train_df["sentence"] = train_df.words.apply(" ".join)
-test_df["sentence"] = test_df.words.apply(" ".join)
+
+train_df["sentence"] = train_df.words.apply(literal_eval).apply(" ".join)
+test_df["sentence"] = test_df.words.apply(literal_eval).apply(" ".join)
 
 train_df["path"] = data_dir + train_df["hashname"]
 test_df["path"] = data_dir + test_df["hashname"]
@@ -33,8 +46,7 @@ os.system("cp vocab_300_with_numbers.json vocab.json")
 # %%
 train_df["audio"] = train_df.path
 test_df["audio"] = test_df.path
-import datasets
-from datasets import load_dataset, load_metric, Audio
+
 
 train_dataset = datasets.Dataset.from_pandas(train_df)
 test_dataset = datasets.Dataset.from_pandas(test_df)
@@ -45,22 +57,21 @@ test_dataset = test_dataset.cast_column("audio", Audio())
 # %%
 
 
-from transformers import Wav2Vec2CTCTokenizer
-from transformers import Wav2Vec2FeatureExtractor
-from transformers import Wav2Vec2Processor
 tokenizer = Wav2Vec2CTCTokenizer.from_pretrained(
-    "./", unk_token="[UNK]", pad_token="[PAD]", word_delimiter_token=" ")
+    "./", unk_token="[UNK]", pad_token="[PAD]", word_delimiter_token=" "
+)
 
 feature_extractor = Wav2Vec2FeatureExtractor(
-    feature_size=1, sampling_rate=16000, padding_value=0.0, do_normalize=True, return_attention_mask=True)
+    feature_size=1,
+    sampling_rate=16000,
+    padding_value=0.0,
+    do_normalize=True,
+    return_attention_mask=True,
+)
 
-processor = Wav2Vec2Processor(
-    feature_extractor=feature_extractor, tokenizer=tokenizer)
 
-import torch
+processor = Wav2Vec2Processor(feature_extractor=feature_extractor, tokenizer=tokenizer)
 
-from dataclasses import dataclass, field
-from typing import Any, Dict, List, Optional, Union
 
 @dataclass
 class DataCollatorCTCWithPadding:
@@ -83,10 +94,14 @@ class DataCollatorCTCWithPadding:
     processor: Wav2Vec2Processor
     padding: Union[bool, str] = True
 
-    def __call__(self, features: List[Dict[str, Union[List[int], torch.Tensor]]]) -> Dict[str, torch.Tensor]:
+    def __call__(
+        self, features: List[Dict[str, Union[List[int], torch.Tensor]]]
+    ) -> Dict[str, torch.Tensor]:
         # split inputs and labels since they have to be of different lenghts and need
         # different padding methods
-        input_features = [{"input_values": feature["input_values"]} for feature in features]
+        input_features = [
+            {"input_values": feature["input_values"]} for feature in features
+        ]
         label_features = [{"input_ids": feature["labels"]} for feature in features]
 
         batch = self.processor.pad(
@@ -102,21 +117,16 @@ class DataCollatorCTCWithPadding:
             )
 
         # replace padding with -100 to ignore loss correctly
-        labels = labels_batch["input_ids"].masked_fill(labels_batch.attention_mask.ne(1), -100)
+        labels = labels_batch["input_ids"].masked_fill(
+            labels_batch.attention_mask.ne(1), -100
+        )
 
         batch["labels"] = labels
 
         return batch
 
+
 data_collator = DataCollatorCTCWithPadding(processor=processor, padding=True)
-
-
-from transformers import Trainer
-from transformers import TrainingArguments
-from transformers import Wav2Vec2ForCTC
-from typing import Any, Dict, List, Optional, Union
-from dataclasses import dataclass, field
-import torch
 
 
 def prepare_dataset(batch):
@@ -124,7 +134,8 @@ def prepare_dataset(batch):
 
     # batched output is "un-batched"
     batch["input_values"] = processor(
-        audio["array"], sampling_rate=audio["sampling_rate"]).input_values[0]
+        audio["array"], sampling_rate=audio["sampling_rate"]
+    ).input_values[0]
     batch["input_length"] = len(batch["input_values"])
 
     with processor.as_target_processor():
@@ -133,17 +144,23 @@ def prepare_dataset(batch):
 
 
 train_mapped = train_dataset.map(
-    prepare_dataset, remove_columns=train_dataset.column_names)
+    prepare_dataset, remove_columns=train_dataset.column_names
+)
 test_mapped = test_dataset.map(
-    prepare_dataset, remove_columns=test_dataset.column_names)
+    prepare_dataset, remove_columns=test_dataset.column_names
+)
 print("Data Preparation Complete!")
 
 # %%
 
 repo_name = modelname
 wer_metric = load_metric("wer")
+cer_metric = load_metric("cer")
+
+
 def compute_metrics(pred):
     import numpy as np
+
     pred_logits = pred.predictions
     pred_ids = np.argmax(pred_logits, axis=-1)
 
@@ -154,11 +171,12 @@ def compute_metrics(pred):
     label_str = processor.batch_decode(pred.label_ids, group_tokens=False)
 
     wer = wer_metric.compute(predictions=pred_str, references=label_str)
+    cer = cer_metric.compute(predictions=pred_str, references=label_str)
+    return {"wer": wer, "cer": cer}
 
-    return {"wer": wer}
 
-max_input_length_in_sec = 20
-train_mapped = train_mapped.filter(lambda x: x < max_input_length_in_sec * processor.feature_extractor.sampling_rate, input_columns=["input_length"])
+# max_input_length_in_sec = 20
+# train_mapped = train_mapped.filter(lambda x: x < max_input_length_in_sec * processor.feature_extractor.sampling_rate, input_columns=["input_length"])
 
 model = Wav2Vec2ForCTC.from_pretrained(
     "facebook/wav2vec2-xls-r-300m",
@@ -169,32 +187,30 @@ model = Wav2Vec2ForCTC.from_pretrained(
     layerdrop=0.0,
     ctc_loss_reduction="mean",
     pad_token_id=processor.tokenizer.pad_token_id,
-    vocab_size=len(processor.tokenizer)
+    vocab_size=len(processor.tokenizer),
 )
 
 model.freeze_feature_extractor()
 
-from transformers import TrainingArguments
 
 training_args = TrainingArguments(
-  output_dir=repo_name,
-  group_by_length=True,
-  per_device_train_batch_size=16,
-  gradient_accumulation_steps=4,
-  evaluation_strategy="steps",
-  num_train_epochs=8,
-  gradient_checkpointing=True,
-  fp16=True,
-  save_steps=6700//5,
-  eval_steps=6700//20,
-  logging_steps=400,
-  learning_rate=3e-4,
-  warmup_steps=500,
-  save_total_limit=5,
-  push_to_hub=False,
+    output_dir=repo_name,
+    group_by_length=True,
+    per_device_train_batch_size=16,
+    gradient_accumulation_steps=4,
+    evaluation_strategy="steps",
+    num_train_epochs=8,
+    gradient_checkpointing=True,
+    fp16=True,
+    save_steps=6700 // 5,
+    eval_steps=6700 // 20,
+    logging_steps=400,
+    learning_rate=3e-4,
+    warmup_steps=500,
+    save_total_limit=5,
+    push_to_hub=False,
 )
 
-from transformers import Trainer
 
 trainer = Trainer(
     model=model,
