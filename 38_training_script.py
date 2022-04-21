@@ -23,6 +23,26 @@ cuda.select_device(0)
 
 # %%
 
+
+
+def process(text:str):
+    from parse import compile
+    from string import punctuation
+    p = compile("{hit:d}.")
+    in_list = text.split()
+    out_list = list()
+    for seg in in_list:
+        parse_result = p.parse(seg)
+        if parse_result:
+            # We got a number with a dot afterward:
+            out_list.append(seg.lower())
+        else:
+            out_list.append(seg.translate(str.maketrans('', '', punctuation)).lower())
+    return " ".join(out_list)
+
+
+
+
 data_dir = "/home/peterr/macocu/task8/transfer/"
 train_df = pd.read_csv("37_train_split.csv" )
 train_df["split"] = "train"
