@@ -1,21 +1,18 @@
 # %%
 
-from transformers import Wav2Vec2ForCTC
-from transformers import TrainingArguments
-from transformers import Trainer
-from typing import Any, Dict, List, Optional, Union
-from dataclasses import dataclass, field
-from transformers import Wav2Vec2Processor
-from transformers import Wav2Vec2FeatureExtractor
-from transformers import Wav2Vec2CTCTokenizer
-from datasets import load_dataset, load_metric, Audio
-import datasets
-from ast import literal_eval
 import os
-import numpy as np
+from ast import literal_eval
+from dataclasses import dataclass, field
+from typing import Any, Dict, List, Optional, Union
+
+import datasets
 import pandas as pd
 import torch
+from datasets import Audio, load_dataset, load_metric
 from numba import cuda
+from transformers import (Trainer, TrainingArguments, Wav2Vec2CTCTokenizer,
+                          Wav2Vec2FeatureExtractor, Wav2Vec2ForCTC,
+                          Wav2Vec2Processor)
 
 cuda.select_device(0)
 cuda.close()
@@ -49,7 +46,6 @@ train_df["split"] = "train"
 
 test_df = pd.read_csv("37_test_split.csv" )
 test_df["split"] = "dev"
-from ast import literal_eval
 train_df["sentence"] = train_df.words.apply(literal_eval).apply(" ".join).apply(process)
 test_df["sentence"] = test_df.words.apply(literal_eval).apply(" ".join).apply(process)
 
