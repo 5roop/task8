@@ -508,3 +508,37 @@ Setup:
 The rest of the training params are the same as before.
 
 So far the training is progressing as intended.
+
+# Addendum 2022-04-22T11:21:05
+
+Model trained without problems.
+
+Some observed issues:
+
+| actual                | labels                | model output          |
+|-----------------------|-----------------------|-----------------------|
+| 2/3                   | 23                    | 2003                  |
+| 24 i pol              | 24 i pol              | 245                   |
+| 7.31%                 | 731                   | 731                   |
+| sa jednom kunom       | sa 1 kn               | sa 1ednom kunom       |
+| znači                 | znači                 | zn                    |
+|                       | za 2 dana             | za d2a dana           |
+| 10 godina             | 10 godina             | 10 gn                 |
+| do 2029. godine       | do 2029.              | do 2029. g            |
+| 2016. godinu          | 2016. g               | 2016. godinu          |
+| 31 stranicu           | 31 str                | 31 stranicu           |
+|                       | zločine 1945. do 1947 | zločine t1945 do 1947 |
+|                       | u 2                   | u dv                  |
+|                       | od 6. mjeseca         | od čestog mjeseca     |
+| na adresi sveti duh 8 | na adresi sv duh 8.   | na adresi sveti duh 8 |
+|                       | 2011g                 | 2011. godine          |
+|                       | u 4 oka               | u 4r oka              |
+|                       | ¾ plodne zemlje       | 34te plodne zemlje    |
+|                       | do 2 milijarde        | do dv milijarde       |
+|                       | 100 četvornih metara  | 100četvornih metara   |
+|                       | 150000 eura           | 150 tisuća eura       |
+|                       | prije 2 godine        | prije d2 godine       |
+|                       | 25 godina             | 25 god                |
+|                       | 60 tisuća kuna        | 60 0suć kuna          |
+
+It is clear that we didn't yet train the numerals fully. In future we might want to inspect the transcripts and pay attention to stuff like ¾, fractions with slashes, abreviations (g, kn)...
