@@ -19,6 +19,7 @@ __pycache__/
 6_
 7_
 15_
+*.arpa
 # VSCode stuff:
 .vscode/
 
