@@ -10,9 +10,14 @@ import pandas as pd
 import torch
 from datasets import Audio, load_dataset, load_metric
 from numba import cuda
-from transformers import (Trainer, TrainingArguments, Wav2Vec2CTCTokenizer,
-                          Wav2Vec2FeatureExtractor, Wav2Vec2ForCTC,
-                          Wav2Vec2Processor)
+from transformers import (
+    Trainer,
+    TrainingArguments,
+    Wav2Vec2CTCTokenizer,
+    Wav2Vec2FeatureExtractor,
+    Wav2Vec2ForCTC,
+    Wav2Vec2Processor,
+)
 
 cuda.select_device(0)
 cuda.close()
@@ -21,10 +26,10 @@ cuda.select_device(0)
 # %%
 
 
-
-def process(text:str):
+def process(text: str):
     from parse import compile
     from string import punctuation
+
     p = compile("{hit:d}.")
     in_list = text.split()
     out_list = list()
@@ -34,17 +39,15 @@ def process(text:str):
             # We got a number with a dot afterward:
             out_list.append(seg.lower())
         else:
-            out_list.append(seg.translate(str.maketrans('', '', punctuation)).lower())
+            out_list.append(seg.translate(str.maketrans("", "", punctuation)).lower())
     return " ".join(out_list)
 
 
-
-
 data_dir = "/home/peterr/macocu/task8/transfer/"
-train_df = pd.read_csv("37_train_split.csv" )
+train_df = pd.read_csv("37_train_split.csv")
 train_df["split"] = "train"
 
-test_df = pd.read_csv("37_test_split.csv" )
+test_df = pd.read_csv("37_test_split.csv")
 test_df["split"] = "dev"
 train_df["sentence"] = train_df.words.apply(literal_eval).apply(" ".join).apply(process)
 test_df["sentence"] = test_df.words.apply(literal_eval).apply(" ".join).apply(process)
@@ -191,7 +194,9 @@ def compute_metrics(pred):
 
 
 # max_input_length_in_sec = 20
-# train_mapped = train_mapped.filter(lambda x: x < max_input_length_in_sec * processor.feature_extractor.sampling_rate, input_columns=["input_length"])
+# train_mapped = train_mapped.filter(
+#   lambda x: x < max_input_length_in_sec * processor.feature_extractor.sampling_rate,
+#  input_columns=["input_length"])
 
 model = Wav2Vec2ForCTC.from_pretrained(
     "facebook/wav2vec2-large-slavic-voxpopuli-v2",
