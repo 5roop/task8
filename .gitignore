@@ -20,6 +20,7 @@ __pycache__/
 7_
 15_
 *.arpa
+40_with_lm/*
 # VSCode stuff:
 .vscode/
 
